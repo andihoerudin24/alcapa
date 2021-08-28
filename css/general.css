@@ -1,0 +1,172 @@
+/* -- COLOR -- */
+.color-core { color: #2351c2; }
+
+.bg-core { background: #2351c2; }
+
+.color-second { color: #1841a6; }
+
+.bg-second { background: #1841a6; }
+
+.color-black { color: #101010; }
+
+.color-black-semi { color: #444; }
+
+.color-grey { color: #999; }
+
+.bg-grey { background: #EFEFEF; }
+
+.bg-shadow { background: #DDD; }
+
+.bg-black-semi { background: #444; }
+/* -- #COLOR -- */
+
+/* -- FONT -- */
+.fontsize-small { font-size: 0.95em; }
+
+.fontsize-smaller { font-size: 0.9em; }
+
+.fontsize-smallest { font-size: 0.8em !important; }
+
+.fontsize-mini { font-size: 0.7em; }
+
+.fontsize-miniest { font-size: 0.6em; }
+
+.fontsize-normal { font-size: 1em; }
+
+.fontsize-big { font-size: 1.15em !important; }
+
+.fontsize-bigger { font-size: 1.3em !important; }
+
+.fontsize-biggest { font-size: 1.5em !important; }
+
+.height-big { line-height: 1.8em; }
+/* -- #FONT -- */
+
+/* -- BUTTON -- */
+.btn-core { background: #1fb89e; border-radius: 0; color: #FFF; border: 2px solid #1fb89e; }
+
+.btn-core:hover { background: #0c6d5d; color: #FFF; border: 2px solid #0c6d5d; }
+
+button { border-radius: 0 !important; }
+/* -- #BUTTON -- */
+
+/* -- HOVER -- */
+.hover,.pagination .num a { cursor: pointer; -webkit-transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out;
+-ms-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out; transition: all 0.3s ease-out; }
+
+.hover:hover,.pagination .num a:hover { -webkit-transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out;
+-ms-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out; transition: all 0.3s ease-out; }
+
+.hover-size { -webkit-transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out;
+-ms-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out; transition: all 0.3s ease-out; }
+
+.hover-size:hover { transform: scale(1.1); -webkit-transition: all 0.3s ease-out; -moz-transition: all 0.3s ease-out;
+-ms-transition: all 0.3s ease-out; -o-transition: all 0.3s ease-out; transition: all 0.3s ease-out;
+cursor: pointer; }
+
+.hover-bold:hover { color: #101010 !important; }
+
+.hover-core:hover { color: #1fb89e !important; }
+
+.hover-secondary:hover { color: #999 !important; }
+
+.hover-opacity:hover { opacity: 1 !important; }
+/* -- #HOVER -- */
+
+/* -- INPUT -- */
+.input-special label { font-weight: bold; font-size: 0.8em; line-height: 0; }
+
+.input-special label span { color: red; }
+
+.input-special input,.input-special textarea,.input-special select { border: none; 
+border-bottom: 1px solid #DDD; outline: none !important; box-shadow: none !important;
+border-radius: 0 !important; padding-left: 0 !important; }
+
+.input-special select { margin-top: 4px; }
+
+.input-special input::-webkit-input-placeholder { color: #AAA; }
+
+.input-special input:-ms-input-placeholder { color: #AAA; }
+
+.input-special input::placeholder { color: #AAA; }
+/* -- #INPUT -- */
+
+/* -- OPACITY -- */
+.opacity-full { opacity: 0.3; }
+
+.opacity-half { opacity: 0.5; }
+
+.opacity-semi { opacity: 0.7; }
+/* -- #OPACITY -- */
+
+/* -- POSITION -- */
+.absolute-top { top: 0 !important; }
+
+.absolute-bottom { bottom: 0 !important; }
+
+.absolute-left { left: 0 !important; }
+
+.absolute-right { right: 0 !important; }
+/* -- #POSITION -- */
+
+/* -- LINE HEIGHT -- */
+.height-space-none { line-height: 0; }
+
+.height-space-small { line-height: 10px; }
+
+.height-space-normal { line-height: 1em; }
+
+.height-space-bigger { line-height: 1.4em; }
+
+.letter-space-small { letter-spacing: 0.1em; }
+
+.letter-spacing { letter-spacing: 1px; }
+/* -- #LINE HEIGHT -- */
+
+/* -- FORM -- */
+form label { font-size: 0.85em !important; }
+
+form input{ font-size: 0.91em !important; padding-top: 18px !important; padding-bottom: 18px !important; }
+
+form input::placeholder { color: #AAA !important; opacity: 1; }
+
+form input:-ms-input-placeholder { color: #999 !important; }
+
+form input::-ms-input-placeholder { color: #999 !important; }
+
+select { padding-right: 50px ; }
+
+.invalid-feedback { margin-bottom: 15px; }
+
+.custom-control-label:hover { cursor: pointer !important; }
+/* -- #FORM -- */
+
+/* -- LAYOUT -- */
+.h-100 { min-height: 100vh; }
+/* -- #LAYOUT -- */
+
+/* -- TABLE -- */
+.table thead > tr > td { border-top: none; border-bottom: 1px solid #888; }
+
+.table tbody > tr > td { border-top: none !important; border-bottom: 1px solid #DDD; }
+
+#table-data_wrapper .row:first-child { background: #293145; margin: 0; padding-top: 10px; border: none; color: #FFF; }
+
+#table-data_filter label i { top: 2px; position: relative; left: -5px; }
+
+.table input[type="checkbox"] { cursor: pointer; }
+/* -- #TABLE -- */
+
+/* -- POPOVER -- */
+.popover { background: #444; }
+
+.popover-body { color: #FFF; padding: 5px 10px; font-size: 0.9em; }
+
+.popover .arrow:after { border-top-color: #444; }
+/* -- #POPOVER -- */
+
+/* -- TIME AGO -- */
+.timeago { color: #999; }
+
+.timeago:hover { cursor: pointer; color: #101010; }
+/* -- #TIME AGO -- */
