@@ -28,6 +28,10 @@
                             <div class="icon-w"><div class="os-icon os-icon-wallet-loaded"></div></div>
                             <span>Transaction</span>
                         </a>
+                        <a href="<?php echo site_url(); ?>Product">
+                            <div class="icon-w"><div class="os-icon os-icon-wallet-loaded"></div></div>
+                            <span>Transaction</span>
+                        </a>
 <!--                         <div class="sub-menu-w">
                             <div class="sub-menu-header text-uppercase">Menu Orders</div>
                             <div class="sub-menu-icon"><i class="os-icon os-icon-wallet-loaded"></i></div>
