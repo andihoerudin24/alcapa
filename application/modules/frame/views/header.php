@@ -39,6 +39,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datatables/select.dataTables.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/datatables/fixedColumns.bootstrap4.min.css">
 <!-- #TABLE -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <title>Backoffice | Alacapa</title>
 

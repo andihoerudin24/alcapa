@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Customer extends MX_Controller {
+class Report extends MX_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -20,7 +20,7 @@ class Customer extends MX_Controller {
 		$this->load->view('frame/header');
 		$this->load->view('frame/menu',$data);
 		$this->load->view('frame/breadcrumb');
-		$this->load->view('customer/customer-page',$data);
+		$this->load->view('report/report-page',$data);
 		$this->load->view('frame/footer');
     }
 

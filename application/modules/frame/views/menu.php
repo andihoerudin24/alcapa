@@ -28,10 +28,8 @@
                             <div class="icon-w"><div class="os-icon os-icon-wallet-loaded"></div></div>
                             <span>Transaction</span>
                         </a>
-                        <a href="<?php echo site_url(); ?>Product">
-                            <div class="icon-w"><div class="os-icon os-icon-wallet-loaded"></div></div>
-                            <span>Transaction</span>
-                        </a>
+                        
+                     
 <!--                         <div class="sub-menu-w">
                             <div class="sub-menu-header text-uppercase">Menu Orders</div>
                             <div class="sub-menu-icon"><i class="os-icon os-icon-wallet-loaded"></i></div>
@@ -42,6 +40,24 @@
                                 </ul>
                             </div>
                         </div> -->
+                    </li>
+                    <li class="<?php if($this->uri->segment(1) == 'product'): ?>activated <?php endif; ?> selected">
+                        <a href="<?php echo site_url(); ?>product">
+                            <div class="icon-w"><div class="os-icon os-icon-users"></div></div>
+                            <span>Product</span>
+                        </a>
+                    </li>
+                    <li class="<?php if($this->uri->segment(1) == 'banner'): ?>activated <?php endif; ?> selected">
+                        <a href="<?php echo site_url(); ?>banner">
+                            <div class="icon-w"><div class="os-icon os-icon-users"></div></div>
+                            <span>Banner</span>
+                        </a>
+                    </li>
+                    <li class="<?php if($this->uri->segment(1) == 'report'): ?>activated <?php endif; ?> selected">
+                        <a href="<?php echo site_url(); ?>report">
+                            <div class="icon-w"><div class="os-icon os-icon-users"></div></div>
+                            <span>Report</span>
+                        </a>
                     </li>
                     <li class="<?php if($this->uri->segment(1) == 'customer'): ?>activated <?php endif; ?> selected">
                         <a href="<?php echo site_url(); ?>customer">
