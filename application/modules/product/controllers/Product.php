@@ -48,34 +48,58 @@ class Product extends MX_Controller
     public function add()
     {
         if (isset($_POST['submit'])) {
-            $product_url = $this->upload_image();
-            if ($product_url) {
-                $data = array(
-                    'product_title' => $this->input->post('product_title'),
-                    'product_price' => $this->input->post('product_price'),
-                    'product_stock' => $this->input->post('product_stock'),
-                    'product_description' => $this->input->post('product_description'),
-                    'product_url' => base_url() . 'uploads/' . $product_url,
-                    'category_id' => $this->input->post('category_id'),
-                    'product_subcategory' => $this->input->post('product_subcategory'),
-                    'product_subchild' => $this->input->post('product_subchild'),
-                    'product_weight' => $this->input->post('product_weight'),
-                    'product_is_publish' => 1,
-                );
-                $this->db->insert('product', $data);
-                $prod_id = $this->db->insert_id();
-                $size_prodcut = [];
-                $product_size = $this->input->post('product_size');
-                foreach ($product_size as $size) {
-                    $size_prodcut[] = [
+           $data = array(
+                'product_title' => $this->input->post('product_title'),
+                'product_price' => $this->input->post('product_price'),
+                'product_stock' => $this->input->post('product_stock'),
+                'product_description' => $this->input->post('product_description'),
+                'product_short_description' => $this->input->post('product_short_description'),
+                //'product_url' => base_url() . 'uploads/' . $product_url,
+                'category_id' => $this->input->post('category_id'),
+                'product_subcategory' => $this->input->post('product_subcategory'),
+                'product_subchild' => $this->input->post('product_subchild'),
+                'product_weight' => $this->input->post('product_weight'),
+                'product_is_publish' => $this->input->post('product_is_publish'),
+            );
+            $this->db->insert('product', $data);
+            $prod_id = $this->db->insert_id();
+            $size_prodcut = [];
+            $productimage = [];
+            $productcolors = [];
+            $product_size = $this->input->post('product_size');
+            $product_color = $this->input->post('color');
+            foreach ($product_color as $key => $colors) {
+                if (!is_null($colors)){
+                    $productcolors[] = [
                         'product_id' => $prod_id,
-                        'product_size' => $size
+                        'color' => $colors,
                     ];
                 }
-                $this->db->insert_batch('product_varian', $size_prodcut);
-                redirect('product');
-            } 
-        }else {
+            }
+            $this->db->insert_batch('product_color', $productcolors);
+            foreach ($product_size as $size) {
+                $size_prodcut[] = [
+                    'product_id' => $prod_id,
+                    'product_size' => $size,
+                    'product_sku' => $this->input->post('SKU')
+                ];
+            }
+            $this->db->insert_batch('product_varian', $size_prodcut);
+            $count = count($size_prodcut);
+            $first_id = $this->db->insert_id();
+            $last_id = $first_id + ($count-1);
+            $product_url = $this->upload_image();
+            foreach ($product_url as $key => $value) {
+                $productimage[] =[
+                    'product_sku' => $this->input->post('SKU'),
+                    'product_id' =>$prod_id,
+                    'image' => base_url() . 'uploads/' . $value,
+                    'product_varian_id' => $last_id
+                ];
+            }
+            $this->db->insert_batch('product_image', $productimage);
+            redirect('product');
+        } else {
             $data['status'] = 'product';
             $data['title']         = 'Add Product';
             $this->load->view('frame/header');
@@ -145,14 +169,31 @@ class Product extends MX_Controller
 
     function upload_image()
     {
+        $data = array();
+        $count_images = count($_FILES['images']['name']);
+        for ($i = 0; $i < $count_images; $i++) {
+            if (!empty($_FILES['images']['name'][$i])) {
+                $_FILES['file']['name'] = $_FILES['images']['name'][$i];
+                $_FILES['file']['type'] = $_FILES['images']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['images']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['images']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['images']['size'][$i];
+                $config['upload_path'] = './uploads';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['max_size'] = '900000';
+                $config['file_name'] = $_FILES['images']['name'][$i];
 
-        $config['upload_path'] = './uploads';
-        $config['allowed_types'] = 'gif|png|jpg';
-        $config['max_size'] = 50000;
-        $this->load->library('upload', $config);
-        $this->upload->do_upload('userfile');
-        $uploads = $this->upload->data();
-        return $uploads['file_name'];
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('file')) {
+                    $uploadData = $this->upload->data();
+                    $data[] = $uploadData['file_name'];
+                    // return $arrData;
+                    //$this->Image_model->save_image($arrData);
+                }
+            }
+        }
+        return $data;
     }
 
 
