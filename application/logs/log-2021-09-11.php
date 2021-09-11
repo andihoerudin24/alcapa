@@ -702,3 +702,4 @@ ERROR - 2021-09-11 08:22:39 --> Severity: Warning --> Invalid argument supplied 
 ERROR - 2021-09-11 08:23:34 --> Severity: Warning --> Invalid argument supplied for foreach() /Applications/XAMPP/xamppfiles/htdocs/alacapa-backoffice/application/modules/product/controllers/Product.php 78
 ERROR - 2021-09-11 08:28:02 --> Query error: Column 'product_is_publish' cannot be null - Invalid query: INSERT INTO `product` (`product_title`, `product_price`, `product_stock`, `product_description`, `product_short_description`, `category_id`, `product_subcategory`, `product_subchild`, `product_weight`, `product_is_publish`) VALUES ('iseng', '', '', '', '', '1', '', '', '23', NULL)
 ERROR - 2021-09-11 08:28:02 --> Severity: Warning --> Invalid argument supplied for foreach() /Applications/XAMPP/xamppfiles/htdocs/alacapa-backoffice/application/modules/product/controllers/Product.php 80
+ERROR - 2021-09-11 10:31:03 --> 404 Page Not Found: /index
