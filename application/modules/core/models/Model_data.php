@@ -113,7 +113,7 @@ class Model_data extends CI_Model
 
     public function list_product()
     {
-        $this->db->select('product_id,product_title,category_name,product_stock,product_price');
+        $this->db->select('product_subchild,product_sku,product_id,product_title,category_name,product_stock,product_price');
         $this->db->from('product');
         $this->db->join('category', 'product.category_id = category.category_id', 'LEFT');
         $query = $this->db->get();

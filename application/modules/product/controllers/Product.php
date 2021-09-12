@@ -33,6 +33,24 @@ class Product extends MX_Controller
     {
         $uri =  $this->uri->segment('3');
         $data['product'] = $this->db->get_where('product', array('product_id' => $uri))->row_Array();
+
+        $this->db->select('product_color.color as colors');    
+        $this->db->from('product');
+        $this->db->join('product_color', 'product.product_id = product_color.product_id');
+        $this->db->where('product.product_id',$uri);
+        $data['product_varian'] = $this->db->get()->result_array();
+
+        $this->db->select('product_varian.product_size as sizes');    
+        $this->db->from('product');
+        $this->db->join('product_varian', 'product.product_sku = product_varian.product_sku');
+        $this->db->where('product.product_id',$uri);
+        $data['product_varian'] = $this->db->get()->result_array();
+        
+        $this->db->select('product_image.image as images');    
+        $this->db->from('product');
+        $this->db->join('product_image', 'product.product_sku = product_image.product_sku');
+        $this->db->where('product.product_id',$uri);
+        $data['product_image'] = $this->db->get()->result_array();
         // var_dump($data);
         // die;
         $data['status'] = 'sales marketing';
@@ -52,6 +70,7 @@ class Product extends MX_Controller
                 'product_title' => $this->input->post('product_title'),
                 'product_price' => $this->input->post('product_price'),
                 'product_stock' => $this->input->post('product_stock'),
+                'product_sku' => $this->input->post('SKU'),
                 'product_description' => $this->input->post('product_description'),
                 'product_short_description' => $this->input->post('product_short_description'),
                 //'product_url' => base_url() . 'uploads/' . $product_url,
@@ -59,8 +78,9 @@ class Product extends MX_Controller
                 'product_subcategory' => $this->input->post('product_subcategory'),
                 'product_subchild' => $this->input->post('product_subchild'),
                 'product_weight' => $this->input->post('product_weight'),
-                'product_is_publish' => $this->input->post('product_is_publish'),
+                'product_is_publish' => $this->input->post('product_is_publish') ? 1 : 0,
             );
+          
             $this->db->insert('product', $data);
             $prod_id = $this->db->insert_id();
             $size_prodcut = [];
@@ -112,50 +132,118 @@ class Product extends MX_Controller
 
     public function update()
     {
-        $product_url = $this->upload_image();
+        
         $prod_id = $this->input->post('product_id');
         $data = array(
             'product_title' => $this->input->post('product_title'),
-            'product_price' => $this->input->post('product_price'),
-            'product_stock' => $this->input->post('product_stock'),
-            'product_description' => $this->input->post('product_description'),
-            'product_url' => base_url() . 'uploads/' . $product_url,
-            'category_id' => $this->input->post('category_id'),
-            'product_subcategory' => $this->input->post('product_subcategory'),
-            'product_subchild' => $this->input->post('product_subchild'),
-            'product_weight' => $this->input->post('product_weight'),
-            'product_is_publish' => 1,
+                'product_price' => $this->input->post('product_price'),
+                'product_stock' => $this->input->post('product_stock'),
+                'product_sku' => $this->input->post('SKU'),
+                'product_description' => $this->input->post('product_description'),
+                'product_short_description' => $this->input->post('product_short_description'),
+                //'product_url' => base_url() . 'uploads/' . $product_url,
+                'category_id' => $this->input->post('category_id'),
+                'product_subcategory' => $this->input->post('product_subcategory'),
+                'product_subchild' => $this->input->post('product_subchild'),
+                'product_weight' => $this->input->post('product_weight'),
+                'product_is_publish' => $this->input->post('product_is_publish') ? 1 : 0,
         );
         $this->db->where('product_id', $prod_id);
         $this->db->update('product', $data);
-        $dataproductvariant = $this->db->get_where('product_varian', array('product_id' => $prod_id))->result();
-        $size_prodcut = [];
-        $product_size = $this->input->post('product_size');
-        if (count($product_size) >= count($dataproductvariant)) {
-            foreach ($dataproductvariant as $variant) {
-                $this->db->where('product_varian_id', $variant->product_varian_id);
-                $this->db->delete('product_varian');
-            }
-            foreach ($product_size as $size) {
-                $size_prodcut[] = [
-                    'product_id' => $prod_id,
-                    'product_size' => $size
-                ];
-            }
-        } else {
-            foreach ($dataproductvariant as $variant) {
-                $this->db->where('product_varian_id', $variant->product_varian_id);
-                $this->db->delete('product_varian');
-            }
-            foreach ($product_size as $size) {
-                $size_prodcut[] = [
-                    'product_id' => $prod_id,
-                    'product_size' => $size
-                ];
-            }
+
+        //update image
+        $dataproductimages = $this->db->get_where('product_image', array('product_id' => $prod_id))->result();
+        $idproductimage=[];
+        $productimage=[];
+        $product_url = $this->upload_image();
+        foreach($dataproductimages as $key => $value){
+                array_push($idproductimage,[
+                    'product_image_id'=>$value->product_image_id
+                ]);     
         }
-        $this->db->insert_batch('product_varian', $size_prodcut);
-        redirect('product');
+        if ($product_url) {
+            foreach ($product_url as $key => $value) {
+            $productimage[] =[
+                'product_image_id'  => $idproductimage[$key]['product_image_id'],
+                'product_sku' => $this->input->post('SKU'),
+                'product_id' =>$prod_id,
+                'image' => base_url() . 'uploads/' . $value,
+            ];
+          }
+          $this->db->update_batch('product_image',$productimage, 'product_image_id'); 
+        }
+       
+      
+        // $productimage = [];
+        // foreach ($product_url as $key => $value) {
+        //     $productimage[] =[
+        //         'product_sku' => $this->input->post('SKU'),
+        //         'product_id' =>$prod_id,
+        //         'image' => base_url() . 'uploads/' . $value,
+        //         // 'product_varian_id' => $last_id
+        //     ];
+        // }
+        
+        //update product variant
+         $dataproductvariant = $this->db->get_where('product_varian', array('product_id' => $prod_id))->result();
+         $size_prodcut = [];
+         $product_size = $this->input->post('product_size');
+            if (count($product_size) >= count($dataproductvariant)) {
+                foreach ($dataproductvariant as $variant) {
+                    $this->db->where('product_varian_id', $variant->product_varian_id);
+                    $this->db->delete('product_varian');
+                }
+                foreach ($product_size as $size) {
+                    $size_prodcut[] = [
+                        'product_id' => $prod_id,
+                        'product_size' => $size
+                    ];
+                }
+            } else {
+                foreach ($dataproductvariant as $variant) {
+                    $this->db->where('product_varian_id', $variant->product_varian_id);
+                    $this->db->delete('product_varian');
+                }
+                foreach ($product_size as $size) {
+                    $size_prodcut[] = [
+                        'product_id' => $prod_id,
+                        'product_size' => $size
+                    ];
+                }
+            }
+            $this->db->insert_batch('product_varian', $size_prodcut);
+
+            //update product color
+            $dataproductcolors = $this->db->get_where('product_color', array('product_id' => $prod_id))->result();
+            $count_color = [];
+            $product_colors = $this->input->post('color');
+            if(!empty($product_colors[0])){
+                if (count($product_colors) >= count($dataproductcolors)) {
+                    foreach ($dataproductcolors as $variantcolors) {
+                        $this->db->where('product_id', $variantcolors->product_id);
+                        $this->db->delete('product_color');
+                    }
+                    foreach ($product_colors as $colorss) {
+                        $count_color[] = [
+                            'product_id' => $prod_id,
+                            'color' => $colorss
+                        ];
+                    }
+                } else {
+                    foreach ($dataproductcolors as $variantcolors) {
+                        $this->db->where('product_id', $variantcolors->product_id);
+                        $this->db->delete('product_color');
+                    }
+                    foreach ($product_colors as $colorss) {
+                        $count_color[] = [
+                            'product_id' => $prod_id,
+                            'color' => $colorss
+                        ];
+                    }
+                }
+                $this->db->insert_batch('product_color', $count_color);
+            }
+            redirect('product');
     }
 
 

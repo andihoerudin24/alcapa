@@ -18,8 +18,10 @@
 					<table id="example" class="table table-striped table-bordered" style="width:100%">
 						<thead>
 							<tr>
+								<th>Product SKU</th>
 								<th>Name Product</th>
 								<th>Category</th>
+								<th>Sub Category Child</th>
 								<th>Stock</th>
 								<th>Price</th>
 								<th>Action</th>
@@ -28,8 +30,10 @@
 						<tbody>
 							<?php foreach ($datas as $row) : ?>
 								<tr>
+									<td><?php echo $row->product_sku; ?></td>
 									<td><?php echo $row->product_title; ?></td>
 									<td><?php echo $row->category_name; ?></td>
+									<td><?php echo $row->product_subchild; ?></td>
 									<td><?php echo $row->product_stock; ?></td>
 									<td><?php echo $row->product_price; ?></td>
 									<td><a href="<?php echo site_url(); ?>product/edit/<?php echo $row->product_id ?>" class="btn btn-warning">Edit</a> <a href="<?php echo site_url(); ?>product/delete/<?php echo $row->product_id ?>" class="btn btn-danger">Delete</a></td>
